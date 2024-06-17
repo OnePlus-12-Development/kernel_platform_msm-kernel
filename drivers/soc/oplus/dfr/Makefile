@@ -86,4 +86,3 @@ obj-$(CONFIG_OPLUS_BSP_DFR_USERSPACE_BACKTRACE)     += common/oplus_bsp_dfr_ubt/
 #ifdef OPLUS_FEATURE_LAST_BOOT_REASON
 obj-$(CONFIG_OPLUS_FEATURE_LAST_BOOT_REASON) += common/last_boot_reason/
 #endif /*OPLUS_FEATURE_LAST_BOOT_REASON*/
-

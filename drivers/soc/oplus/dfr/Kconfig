@@ -80,4 +80,3 @@ source "drivers/soc/oplus/dfr/common/oplus_bsp_dfr_ubt/Kconfig"
 #ifdef OPLUS_FEATURE_LAST_BOOT_REASON
 source "drivers/soc/oplus/dfr/common/last_boot_reason/Kconfig"
 #endif /*OPLUS_FEATURE_LAST_BOOT_REASON*/
-

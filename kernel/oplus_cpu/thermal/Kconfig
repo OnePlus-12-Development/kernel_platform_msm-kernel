@@ -8,3 +8,10 @@ config HORAE_THERMAL_SHELL
 	  default y
 	  help
 	    Provide three thermal zones(front, frame and back) to get real shell temp.
+
+config OPLUS_IPA_THERMAL
+          tristate "oplus ipa thermal sensor driver"
+          depends on HORAE_THERMAL_SHELL
+          default n
+          help
+            the driver of oplus virtual ipa sensor
