@@ -5,7 +5,7 @@
 #ifndef _OPLUS_PROJECT_H_
 #define _OPLUS_PROJECT_H_
 #include "oplus_project_data_ocdt.h"
-#include <linux/version.h>
+#include "oplus_project_oldcdt.h"
 
 #define ALIGN4(s) ((sizeof(s) + 3)&(~0x3))
 
@@ -16,9 +16,6 @@
 #define FEATURE1_OPEARTOR_CU_MASK 0100
 #define FEATURE1_OPEARTOR_MAX_MASK 1111
 
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(6, 1, 0))
-#define PDE_DATA pde_data
-#endif
 
 
 struct pcb_match {

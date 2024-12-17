@@ -76,7 +76,7 @@ static int write_block_cnt   = 0;
 static int line_count        = 0;
 static int total_write_times = 0;
 static int wait_system_server_start_time = NORAML_BOOT_WAIT_SS_TIME;
-
+static int is_timeout = 0;
 
 struct kernel_log_thread_header
 {
@@ -158,6 +158,7 @@ int wb_kernel_log(struct block_device *bdev, char *buf, char *line_buf)
 
 	while (loop_cnt < MAX_STOP_CNT)  // 180S timeout
 	{
+		is_timeout = 0;
 		while (kmsg_dump_get_line(&wb_kmsg_dumper, true, line_buf, BUF_SIZE_OF_LINE, &len))
 		{
 			if(((temp_size + len) >= WB_BLOCK_SIZE)) {
@@ -224,6 +225,7 @@ int wb_kernel_log(struct block_device *bdev, char *buf, char *line_buf)
 		msleep_interruptible(PER_LOOP_MSEC); // update once per 0.5 sec
 		isforcewb = true;
 	}
+	is_timeout = 1;
 	oprkl_info_print("system_server init not ready before timeout\n");
 
 FINISH:
@@ -532,7 +534,7 @@ static int reserve_log_main(void *arg)
 		}
 		oprkl_info_print("wait again system server start time : %d\n", wait_system_server_start_time);
 		schedule_timeout_interruptible(wait_system_server_start_time * HZ);
-		if ( (is_need_monitored()) && !phx_is_system_server_init_start())
+		if ( (is_need_monitored()) && !phx_is_system_server_init_start() && is_timeout)
 		{
 			if (set_monitor_header_flag(bdev, &kernel_head))
 			{

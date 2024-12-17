@@ -7,7 +7,6 @@
 
  when       who        what, where, why
  --------   ---        ----------------------------------------------------------
- 10/18/21   Tongyang.Xu   Created file
 =============================================================================
 * Description:     last_boot_reason Kernel Driver
 *

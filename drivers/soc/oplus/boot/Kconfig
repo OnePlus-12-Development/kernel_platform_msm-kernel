@@ -3,5 +3,5 @@
 
 source "drivers/soc/oplus/boot/cmdline_parser/Kconfig"
 source "drivers/soc/oplus/boot/oplus_phoenix/Kconfig"
-source "drivers/soc/oplus/boot/oplus_projectinfo/Kconfig"
-source "drivers/soc/oplus/boot/bootmode/Kconfig"
+source "drivers/soc/oplus/boot/oplus_project/Kconfig"
+source "drivers/soc/oplus/boot/project_info/Kconfig"

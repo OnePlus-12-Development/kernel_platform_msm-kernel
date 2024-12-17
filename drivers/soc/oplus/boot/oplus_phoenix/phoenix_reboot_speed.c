@@ -465,7 +465,7 @@ static void mt_bootprof_switch(int on)
 	spin_unlock(&bootprof_lock);
 
 	if (tmp) {
-		pr_info("BOOTPROF:%10lld.%06ld: %s%lld)\n",
+		pr_info("BOOTPROF:%10ld.%06ld: %s%lld)\n",
 			msec_high(ts), msec_low(ts), on ? "ON (TH:" : "OFF (KO:",
 			on ? msec_high(BOOTPROF_THRESHOLD) : atomic_read(&initcall_num));
 

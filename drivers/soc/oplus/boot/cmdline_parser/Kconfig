@@ -1,6 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-only
 # Copyright (C) 2018-2020 Oplus. All rights reserved.
 
+config OPLUS_FEATURE_CMDLINE
+	tristate "Oplus command line"
+	default n
+	help
+	  define this config to get command line.
+
 config OPLUS_FEATURE_OPLUSBOOT
 	tristate "Oplus android boot"
 	default n
@@ -25,6 +31,11 @@ config OPLUS_FEATURE_BUILDVARIANT
 	help 
 	  define this config to get buildvariant cmdline.
 
+config OPLUS_FEATURE_SIMCARDNUM
+	tristate "Oplus simcardnum"
+	default n
+	help
+	  define this config to get simcardnum cmdline.
 
 config OPLUS_FEATURE_CDT
 	tristate "Oplus cdt"

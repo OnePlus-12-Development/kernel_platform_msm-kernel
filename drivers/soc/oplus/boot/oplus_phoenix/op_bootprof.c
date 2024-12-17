@@ -43,6 +43,7 @@ struct boot_log_struct {
 static int boot_log_count;
 static DEFINE_MUTEX(op_bootprof_lock);
 static bool op_bootprof_enabled;
+static bool show_timestamp = false;
 static int boot_finish = 0;
 char boot_from[BOOT_FROM_SIZE] = { '\0' };
 
@@ -115,7 +116,7 @@ static void op_bootprof_switch(int on)
 	if (op_bootprof_enabled ^ on) {
 		unsigned long long ts = sched_clock();
 
-		pr_info("BOOTPROF:%10Ld.%06ld: %s\n", nsec_high(ts),
+		pr_info("BOOTPROF:%10ld.%06ld: %s\n", nsec_high(ts),
 			nsec_low(ts), on ? "ON" : "OFF");
 
 		if (on) {
@@ -142,12 +143,15 @@ static ssize_t op_bootprof_write(struct file *filp, const char *ubuf,
 		return -EFAULT;
 	}
 
-	if (cnt == 1 && buf[0] == '1') {
+	if (cnt == 2 && buf[0] == '1') {
 		op_bootprof_switch(1);
-		return 1;
-	} else if (cnt == 1 && buf[0] == '0') {
+		return cnt;
+	} else if (cnt == 2 && buf[0] == '0') {
 		op_bootprof_switch(0);
-		return 1;
+		return cnt;
+	} else if (cnt == 2 && buf[0] == 'T') {
+		show_timestamp = !show_timestamp;
+		return cnt;
 	}
 
 	buf[copy_size] = 0;
@@ -185,21 +189,25 @@ static int op_bootprof_show(struct seq_file *m, void *v)
 			continue;
 		}
 
-#ifdef TRACK_TASK_COMM
-#define FMT "%10Ld.%06ld :%5d-%-16s: %s\n"
-#else
 #define FMT "%s\n"
-#endif
-		SEQ_printf(m, FMT,
+#define FMT_TIME "%6ld.%06ld : %s\n"
+#define FMT_FULL "%10Ld.%06ld :%5d-%-16s: %s\n"
+
 #ifdef TRACK_TASK_COMM
-			   nsec_high(p->timestamp), nsec_low(p->timestamp),
-
-			   p->pid, p->comm_event, p->comm_event + TASK_COMM_LEN);
+		SEQ_printf(m, FMT_FULL,
+			nsec_high(p->timestamp), nsec_low(p->timestamp),
+			p->pid, p->comm_event, p->comm_event + TASK_COMM_LEN);
 #else
-			   p->comm_event);
-#endif
+		if (show_timestamp) {
+			SEQ_printf(m, FMT_TIME,
+				nsec_high(p->timestamp),
+				nsec_low(p->timestamp),
+				p->comm_event);
+		} else {
+			SEQ_printf(m, FMT, p->comm_event);
+		}
+#endif /* TRACK_TASK_COMM */
 	}
-
 	return 0;
 }
 

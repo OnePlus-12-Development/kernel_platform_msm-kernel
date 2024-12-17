@@ -44,6 +44,9 @@ static void reinitialze_pet_time_for_debug_build(void)
 	if (AGING == get_eng_version()) {
 		phx_hlos_wd_pet_time = 60 * 10; /* aging test version */
 	}
+	if (HIGH_TEMP_AGING == get_eng_version()) {
+		phx_hlos_wd_pet_time = 60 * 10; /* hightemp aging test version */
+	}
 
 #ifdef CONFIG_MEMLEAK_DETECT_THREAD
 	if (AGING != get_eng_version()) {
@@ -112,6 +115,8 @@ static int phx_is_normal_mode_qcom(void)
 /* copy mtk_boot_common.h */
 #define NORMAL_BOOT 0
 #define ALARM_BOOT 7
+#define SILENCE_BOOT 12
+
 static int phx_is_normal_mode_mtk(void)
 {
 	int mtk_boot_mode = 0;
@@ -119,7 +124,7 @@ static int phx_is_normal_mode_mtk(void)
 	mtk_boot_mode = get_boot_mode();
 	PHX_KLOG_INFO("mtk_boot_mode: %d\n", mtk_boot_mode);
 
-	if ((mtk_boot_mode == NORMAL_BOOT) || (mtk_boot_mode == ALARM_BOOT)) {
+	if ((mtk_boot_mode == NORMAL_BOOT) || (mtk_boot_mode == ALARM_BOOT) ||(mtk_boot_mode == SILENCE_BOOT)) {
 		return 1;
 	} else {
 		return 0;

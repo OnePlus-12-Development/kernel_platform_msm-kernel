@@ -11,18 +11,14 @@
 char startup_mode[MAX_CMDLINE_PARAM_LEN];
 char bootmode[MAX_CMDLINE_PARAM_LEN];
 char serial_no[MAX_CMDLINE_PARAM_LEN];
-char verified_bootstate[MAX_CMDLINE_PARAM_LEN];
 char prj_name[MAX_CMDLINE_PARAM_LEN];
 char stackup_pcb_absent_status[MAX_CMDLINE_PARAM_LEN];
-int sku;
 
 EXPORT_SYMBOL(startup_mode);
 EXPORT_SYMBOL(bootmode);
 EXPORT_SYMBOL(serial_no);
-EXPORT_SYMBOL(verified_bootstate);
 EXPORT_SYMBOL(prj_name);
 EXPORT_SYMBOL(stackup_pcb_absent_status);
-EXPORT_SYMBOL(sku);
 
 module_param_string(startupmode, startup_mode, MAX_CMDLINE_PARAM_LEN,
 0600);
@@ -39,11 +35,6 @@ module_param_string(serialno, serial_no, MAX_CMDLINE_PARAM_LEN,
 MODULE_PARM_DESC(serialno,
 "oplusboot.serialno=<serialno>");
 
-module_param_string(verifiedbootstate, verified_bootstate, MAX_CMDLINE_PARAM_LEN,
-0600);
-MODULE_PARM_DESC(verifiedbootstate,
-"oplusboot.verifiedbootstate=<verifiedbootstate>");
-
 module_param_string(prjname, prj_name, MAX_CMDLINE_PARAM_LEN,
 0600);
 MODULE_PARM_DESC(prjname,
@@ -53,10 +44,5 @@ module_param_string(stackup_pcb_absent, stackup_pcb_absent_status, MAX_CMDLINE_P
 0600);
 MODULE_PARM_DESC(stackup_pcb_absent_status,
 "oplusboot.stackup_pcb_absent=<stackup_pcb_detect_absent>");
-
-module_param(sku,int,
-0600);
-MODULE_PARM_DESC(sku,
-"oplusboot.sku=<sku>");
 
 MODULE_LICENSE("GPL v2");
